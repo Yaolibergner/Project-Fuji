@@ -1,0 +1,10 @@
+body {
+    background-color: lightyellow;
+    margin: 50px;
+    padding: 0px;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+}
