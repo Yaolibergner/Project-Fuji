@@ -9,11 +9,15 @@ app.secret_key = "iloayrengreblime"
 
 # Normally, if you refer to an undefined variable in a Jinja template,
 # Jinja silently ignores this. This makes debugging difficult, so
-#set an attribute of the Jinja environment that says to make this an
+# set an attribute of the Jinja environment that says to make this an
 # error.
 
 app.jinja_env.undefined = jinja2.StrictUndefined
 
+# To fake data base to start it. Later need to create a database, a Message Class
+# that has at least 3 attr(message, author, timestamp). Eventually making it to 
+# SQLAchemy db. 
+MESSAGES = []
 
 @app.route("/")
 def loginpage():
@@ -40,8 +44,20 @@ def logininfo():
     #     flash("Welcome back!")
     #     return redirect('/feedpage')
 
+@app.route("/feedpage")
+def feedpage():
+    """Show entire chat feed."""
 
+    return render_template('feedpage.html')
 
+# Right a quick testing for main.js. This function is just to render fake message
+# here as random number and passing it to feedpage. 
+
+from random import choice
+@app.route('/messages')
+def get_random_num():
+
+    return render_template("messages.html", randomnum=choice([1, 2, 3, 4, 5]))
 
 
 #------------------------------------------------------------------------------#
