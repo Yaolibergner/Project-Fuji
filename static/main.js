@@ -3,7 +3,7 @@
 function showNewMessages(results) {
     let newMessages = results;
 
-    /// The replacedivID is temperory id. The idea here is to create a <div>
+    /// The message-display is temperory id. The idea here is to create a <div>
     /// in the html with this id to show all messages. And then append new messages
     /// to the <div>. 
     $('#message-display').append(newMessages);
