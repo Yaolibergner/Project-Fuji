@@ -45,11 +45,14 @@ class Message(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     timestap = db.Column(db.DateTime)
     texts = db.Column(db.String(3000))
-
-    # Define relationship to user.
+    chatroom_id = db.Column(db.Integer, db.ForeignKey('chatrooms.chatroom_id'))
+    # Define relationship to user. 
+    # Questions to ask Rachel: is there a way to make message has User, but User has no message. 
+    # YES. One way direction can be set without the backref. 
     user = db.relationship("User",
                            backref=db.backref("messages", order_by=message_id))
-
+    chatroom = db.relationship("Chatroom",
+                           backref=db.backref("messages", order_by=message_id))
     def __repr__(self):
         """Provide helpful representation when printed."""
 
@@ -65,26 +68,12 @@ class Chatroom(db.Model):
     chatroom_id = db.Column(db.Integer,
                           autoincrement=True,
                           primary_key=True)
-    chat_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'))
-
-    # Define relationship to message.
-    message = db.relationship("Message",
-                           backref=db.backref("chatrooms", order_by=chatroom_id))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
         return f"<Chatroom chatroom_id={self.chatroom_id} chat_id={self.chat_id}>"
-
-# Do not need the below middle table, one message belongs to one chatroom.
-# class MessageRoom(db.Model):
-#     """Association table for Message and Chatroom table."""
-
-#     __tablename__ = "messagerooms"
-
-#     messageroom_id = db.Column(db.Integer,
-#                           autoincrement=True,
-#                           primary_key=True)
+        
 
 class UserRoom(db.Model):       
     """Association table for User and Chatroom."""
@@ -108,29 +97,27 @@ class UserRoom(db.Model):
 
         return f"""<Userroom userroom_id = {self.userroom_id}>"""
 
+#### No need to store translation message. Show real time translation.  ####
+# class Translation(db.Model):
+#     """Translated messages."""
 
-class Translation(db.Model):
-    """Translated messages."""
+#     __tablename__ = "translations"
 
-    __tablename__ = "translations"
+#     translation_id = db.Column(db.Integer,
+#                           autoincrement=True,
+#                           primary_key=True)
+#     message_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'), nullable=False)
+#     language = db.Column(db.String(15), nullable=False)
+#     texts = db.Column(db.String(3000), nullable=False)
 
-    translation_id = db.Column(db.Integer,
-                          autoincrement=True,
-                          primary_key=True)
-    message_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    trans_texts = db.Column(db.String(3000), nullable=False)
+#     message = db.relationship("Message",
+#                            backref=db.backref("translations", order_by=translation_id))
 
-    message = db.relationship("Message",
-                           backref=db.backref("translations", order_by=translation_id))
-    user = db.relationship("User",
-                           backref=db.backref("translations", order_by=translation_id))
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        return f"""<Translation translation_id = {self.translation_id}
-                    trans_texts={self.trans_texts}>"""
+#         return f"""<Translation translation_id = {self.translation_id}
+#                     trans_texts={self.trans_texts}>"""
 
 
 
