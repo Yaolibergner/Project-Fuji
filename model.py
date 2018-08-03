@@ -109,6 +109,31 @@ class UserRoom(db.Model):
         return f"""<Userroom userroom_id = {self.userroom_id}>"""
 
 
+class Translation(db.Model):
+    """Translated messages."""
+
+    __tablename__ = "translations"
+
+    translation_id = db.Column(db.Integer,
+                          autoincrement=True,
+                          primary_key=True)
+    message_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    trans_texts = db.Column(db.String(3000), nullable=False)
+
+    message = db.relationship("Message",
+                           backref=db.backref("translations", order_by=translation_id))
+    user = db.relationship("User",
+                           backref=db.backref("translations", order_by=translation_id))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return f"""<Translation translation_id = {self.translation_id}
+                    trans_texts={self.trans_texts}>"""
+
+
+
 #####################################################################
 # Helper functions
 
