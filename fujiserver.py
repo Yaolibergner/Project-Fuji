@@ -2,6 +2,7 @@
 
 from flask import Flask, session, render_template, request, flash, redirect
 import jinja2
+# from model import connect_to_db, db
 
 app = Flask(__name__)
 app.secret_key = "iloayrengreblime"
