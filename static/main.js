@@ -7,6 +7,8 @@ function showNewMessages(results) {
     // in the html with this id to show all messages. And then append new messages
     // to the <div>. 
     $('#message-display').html(newMessages);
+    // Add something (if...) to change the scrollbar。If user at the bottom of the scrollbar,
+    // show the scroll to the bottom. 
 }
 
 // A function to get new messages from the chat feed. 

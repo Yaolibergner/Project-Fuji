@@ -14,3 +14,7 @@ form {
     overflow: scroll;
     margin-bottom: 30px;
 }
+
+.message {
+    margin: 5px;
+}
