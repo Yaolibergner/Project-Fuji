@@ -2,7 +2,9 @@
 
 from flask import Flask, session, render_template, request, flash, redirect
 import jinja2
-# from model import connect_to_db, db
+from flask_debugtoolbar import DebugToolbarExtension
+from model import connect_to_db, db, User, Message, Chatroom
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "iloayrengreblime"
@@ -51,16 +53,41 @@ def feedpage():
 
     return render_template('feedpage.html')
 
-# Right a quick testing for main.js. This function is just to render fake message
-# here as random number and passing it to feedpage. 
+@app.route("/feedpage", methods=['POST'])
+def add_messages():
+    """Add meesages to Message database"""
 
-from random import choice
-@app.route('/messages')
-def get_random_num():
+    messages = request.form.get("messages")
+    author_id = 1
+    timestamp = datetime.now()
+    chatroom_id = 1
+    # change timestap to timestamp same goes to model.py!!!!
+    new_message = Message(author_id=author_id, timestap=timestamp,
+                          texts=messages, chatroom_id=chatroom_id)
 
-    return render_template("messages.html", randomnum=choice([1, 2, 3, 4, 5]))
+    db.session.add(new_message)
+    db.session.commit()
 
+    return redirect("/feedpage")
+
+@app.route("/messages")
+def show_messages():
+    """Show messages on feedpage"""
+
+    messages = Message.query.all()
+    return render_template("messages.html", messages=messages)
+    
 
 #------------------------------------------------------------------------------#
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+
+    app.debug = True
+
+    connect_to_db(app)
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    # Use the DebugToolbar
+    DebugToolbarExtension(app)
+
+    app.run(host="0.0.0.0")
+
+

@@ -3,7 +3,13 @@
 {% block content %}
     <h2>Welcome to Fuji Chat</h2>
     <div id='message-display'>
-        replaceme
+    </div>
+    <div>
+        <form action="/feedpage", method="POST">
+        <textarea name="messages" rows="10" cols="100">
+        </textarea> <br>
+        <input type="submit">
+        </form>
     </div>
 
 {% endblock %}    

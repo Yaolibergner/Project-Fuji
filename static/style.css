@@ -8,3 +8,9 @@ body {
 form {
     display: inline-block;
 }
+
+#message-display {
+    height: 300px;
+    overflow: scroll;
+    margin-bottom: 30px;
+}

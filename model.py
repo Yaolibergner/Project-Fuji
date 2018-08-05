@@ -42,22 +42,22 @@ class Message(db.Model):
     message_id = db.Column(db.Integer,
                          autoincrement=True,
                          primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    timestap = db.Column(db.DateTime)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    timestap = db.Column(db.DateTime)   
+    chatroom_id = db.Column(db.Integer, db.ForeignKey('chatrooms.chatroom_id'), nullable=False)
     texts = db.Column(db.String(3000))
-    chatroom_id = db.Column(db.Integer, db.ForeignKey('chatrooms.chatroom_id'))
-    # Define relationship to user. 
-    # Questions to ask Rachel: is there a way to make message has User, but User has no message. 
-    # YES. One way direction can be set without the backref. 
+
     user = db.relationship("User",
-                           backref=db.backref("messages", order_by=message_id))
+                           backref=db.backref("messages"))
     chatroom = db.relationship("Chatroom",
-                           backref=db.backref("messages", order_by=message_id))
+                           backref=db.backref("messages"))
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"""<texts={self.texts} timestap={self.timestap} 
-                   author_id={self.author_id}>"""
+        return f"""<message_id={self.message_id}
+                   texts={self.texts} timestap={self.timestap} 
+                   author_id={self.author_id}
+                   chatroom_id={self.chatroom_id}>"""
 
 
 class Chatroom(db.Model):
@@ -72,7 +72,7 @@ class Chatroom(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"<Chatroom chatroom_id={self.chatroom_id} chat_id={self.chat_id}>"
+        return f"<Chatroom chatroom_id={self.chatroom_id}>"
         
 
 class UserRoom(db.Model):       
@@ -87,37 +87,17 @@ class UserRoom(db.Model):
                           autoincrement=True,
                           primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    room_id = db.Column(db.Integer, db.ForeignKey("chatrooms.chatroom_id"), nullable=False)
+    chatroom_id = db.Column(db.Integer, db.ForeignKey("chatrooms.chatroom_id"), nullable=False)
 
     user = db.relationship("User", backref="userrooms")
-    chatroom = db.relationship("User", backref="userrooms")
+    chatroom = db.relationship("Chatroom", backref="userrooms")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"""<Userroom userroom_id = {self.userroom_id}>"""
-
-#### No need to store translation message. Show real time translation.  ####
-# class Translation(db.Model):
-#     """Translated messages."""
-
-#     __tablename__ = "translations"
-
-#     translation_id = db.Column(db.Integer,
-#                           autoincrement=True,
-#                           primary_key=True)
-#     message_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'), nullable=False)
-#     language = db.Column(db.String(15), nullable=False)
-#     texts = db.Column(db.String(3000), nullable=False)
-
-#     message = db.relationship("Message",
-#                            backref=db.backref("translations", order_by=translation_id))
-
-#     def __repr__(self):
-#         """Provide helpful representation when printed."""
-
-#         return f"""<Translation translation_id = {self.translation_id}
-#                     trans_texts={self.trans_texts}>"""
+        return f"""<Userroom userroom_id = {self.userroom_id}
+                    user_id={self.user_id}
+                    chatroom_id={self.chatroom_id}>"""
 
 
 
