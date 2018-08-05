@@ -1,5 +1,8 @@
 from google.cloud import translate
 
+# See https://github.com/GoogleCloudPlatform/python-docs-samples
+# /blob/master/translate/cloud-client/snippets.py for more reference.
+
 class DetectResult(object):
     """Contains the detection language and confidence level."""
     def __init__(self, result):
@@ -18,7 +21,7 @@ def detect_language(text):
     return DetectResult(result)
 
 # Test the detect_language function.
-detect_language('你好')
+# detect_language('你好')
 
 class TranslateResult(object):
     """Contains translated texts."""
@@ -41,5 +44,5 @@ def translate_text(target, text):
     return TranslateResult(result)
 
 # Print hello world to test the translation function.
-print(translate_text('zh-CN', 'hello world').translated_text)
+# print(translate_text('zh-CN', 'hello world').translated_text)
 
