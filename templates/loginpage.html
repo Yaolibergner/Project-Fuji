@@ -2,14 +2,9 @@
 {% block title %}Login Page{% endblock %}
 {% block content %}
     <h2>Please login</h2>
-    <form action="/login", method="GET">
-        User Name: <input type="text" name="username" required><br>
-        Choose your language: 
-        <select>
-            {% for lang in lang_option %}                
-            <option id="{{ lang }}">{{ lang_option[lang] }}</option>
-            {% endfor %} 
-        </select><br>      
+    <form action="/login", method="POST">
+        Email: <input type="text" name="email" required><br>
+        Password: <input type="password" name="password" required><br>     
         <input type="submit">
     </form>
 {% endblock %}    

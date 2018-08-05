@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Register page{% endblock %}
+{% block content %}
+
+<h1>Register</h1>
+<form action="/register" method="POST">
+  <div>
+    <label>
+      Email
+      <input type="email" name="email" required>
+    </label>
+  </div>
+  <div>
+    <label>
+      Password
+      <input type="password" name="password" required>
+    </label>
+  </div>
+  <div>
+    <label>
+      First name
+      <input type="string" name="fname" required><br>
+      Last name
+      <input type="string" name="lname"><br>
+    </label>
+  </div>
+  <div>
+    <label>
+      Choose your language: 
+        <select class="form-control" name="language" required>
+            {% for lang in lang_option %}                
+            <option value="{{ lang }}">{{ lang_option[lang] }}</option>
+            {% endfor %} 
+        </select>      
+    </label>
+  </div>
+  <div>
+    <input type="submit" value="Register">
+  </div>
+</form>
+{% endblock %}

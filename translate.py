@@ -16,7 +16,8 @@ def detect_language(text):
     result = translate_client.detect_language(text)
 
     return DetectResult(result)
- 
+
+# Test the detect_language function.
 detect_language('你好')
 
 class TranslateResult(object):
@@ -39,5 +40,6 @@ def translate_text(target, text):
     
     return TranslateResult(result)
 
+# Print hello world to test the translation function.
 print(translate_text('zh-CN', 'hello world').translated_text)
 
