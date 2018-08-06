@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Chat Page{% endblock %}
 {% block content %}
+    
     <h2>Welcome to Fuji Chat</h2>
     <div id='message-display'>
     </div>
@@ -10,8 +11,5 @@
         <input type="submit" value="Send">
         </form>
     </div>
-    <div>
-        <form action="/logout", method="POST"></form>
-        <input type="submit" value="Log out">
-    </div>
+
 {% endblock %}    

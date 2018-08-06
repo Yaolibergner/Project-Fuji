@@ -82,7 +82,7 @@ def logininfo():
     #flash("Welcome, you are logged in.")
     return redirect("/feedpage")
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout")
 def logout():
     """User log out."""
 
