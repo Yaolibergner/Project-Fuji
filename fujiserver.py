@@ -1,7 +1,6 @@
 """Flask site for Fuji chat webapp."""
 
-from flask import Flask, session, render_template, 
-                  request, flash, redirect, url_for, g
+from flask import Flask, session, render_template, request, flash, redirect, url_for, g
 import jinja2
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, db, User, Message, Chatroom
@@ -27,9 +26,10 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 @app.before_request
 def load_user():
     """Check if user logged in for each route below."""
-    if session["user_id"]:
-        user = User.query.filter_by(user=session["user_id"]).first()
-
+    if session.get("user_id"):
+        user = User.query.filter_by(user_id=session["user_id"]).first()
+    else: 
+        user = None
     g.user = user
 
 # Add a login_required decorator. This is to protect feedpage not being showed 
@@ -38,7 +38,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if g.user is None:
-            return redirect(url_for("/", next=request.url))
+            return redirect(url_for("loginpage", next=request.url))
         return f(*args, **kwargs)
     return decorated_function
 
