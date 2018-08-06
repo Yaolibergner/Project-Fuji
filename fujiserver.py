@@ -28,8 +28,8 @@ def register_form():
 
     # A dictionary of language options with it's keys. Key as html option id
     # dict[key] as language options. 
-    lang_option = {"eng": "English", "swe": "Swedish", "chin": "Chinese", 
-               "span": "Spanish", "fren": "French", "rus": "Russian"}
+    lang_option = {"en": "English", "sv": "Swedish", "zh-CN": "Chinese", 
+               "es": "Spanish", "fr": "French", "ru": "Russian"}
 
 
     return render_template("register.html", lang_option=lang_option)
