@@ -43,9 +43,9 @@ class Message(db.Model):
                          autoincrement=True,
                          primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    timestap = db.Column(db.DateTime)   
+    timestamp = db.Column(db.DateTime)   
     chatroom_id = db.Column(db.Integer, db.ForeignKey('chatrooms.chatroom_id'), nullable=False)
-    texts = db.Column(db.String(3000))
+    text = db.Column(db.String(3000))
 
     user = db.relationship("User",
                            backref=db.backref("messages"))
@@ -100,7 +100,26 @@ class UserRoom(db.Model):
                     chatroom_id={self.chatroom_id}>"""
 
 
+class Translation(db.Model):
+    """Translated messages."""
 
+    __tablename__ = "translations"
+
+    translation_id = db.Column(db.Integer,
+                          autoincrement=True,
+                          primary_key=True)
+    message_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'), nullable=False)
+    trans_text = db.Column(db.String(3000), nullable=False)
+
+    message = db.relationship("Message",
+                           backref=db.backref("translations"))
+   
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return f"""<Translation translation_id = {self.translation_id}
+                    message_id={self.message_id}
+                    trans_texts={self.trans_texts}>"""
 #####################################################################
 # Helper functions
 

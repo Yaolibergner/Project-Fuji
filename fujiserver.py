@@ -85,8 +85,8 @@ def logininfo():
 @app.route("/logout", methods=["POST"])
 def logout():
     """User log out."""
-    
-    del session["user.user_id"]
+
+    del session["user_id"]
     #flash("Logged out.")
     return redirect("/")
 
@@ -98,16 +98,16 @@ def feedpage():
     return render_template('feedpage.html')
 
 @app.route("/feedpage", methods=['POST'])
-def add_messages():
+def add_message():
     """Add meesages to Message database"""
 
-    messages = request.form.get("messages")
-    author_id = 1
+    message = request.form.get("message")
+    author_id = session["user_id"]
     timestamp = datetime.now()
     chatroom_id = 1
     # change timestap to timestamp same goes to model.py!!!!
-    new_message = Message(author_id=author_id, timestap=timestamp,
-                          texts=messages, chatroom_id=chatroom_id)
+    new_message = Message(author_id=author_id, timestamp=timestamp,
+                          text=message, chatroom_id=chatroom_id)
 
     db.session.add(new_message)
     db.session.commit()
