@@ -1,11 +1,13 @@
 """Flask site for Fuji chat webapp."""
 
-from flask import Flask, session, render_template, request, flash, redirect
+from flask import Flask, session, render_template, 
+                  request, flash, redirect, url_for, g
 import jinja2
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, db, User, Message, Chatroom
 from datetime import datetime
 from translate import translate_text
+from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = "iloayrengreblime"
@@ -18,9 +20,28 @@ app.secret_key = "iloayrengreblime"
 
 app.jinja_env.undefined = jinja2.StrictUndefined
 
-# To fake data base to start it. Later need to create a database, a Message Class
-# that has at least 3 attr(message, author, timestamp). Eventually making it to 
-# SQLAchemy db. 
+
+# Use g the thread local to check if a user is logged in. 
+# https://stackoverflow.com/questions/13617231/how-to-use-g-user-global-in-flask
+
+@app.before_request
+def load_user():
+    """Check if user logged in for each route below."""
+    if session["user_id"]:
+        user = User.query.filter_by(user=session["user_id"]).first()
+
+    g.user = user
+
+# Add a login_required decorator. This is to protect feedpage not being showed 
+# if user not logged in.
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None:
+            return redirect(url_for("/", next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 @app.route('/register')
 def register_form():
@@ -92,8 +113,13 @@ def logout():
 
 
 @app.route("/feedpage")
+@login_required
 def feedpage():
     """Show entire chat feed."""
+
+    # This page should not be seen for people who aren't login. 
+    # http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
+    # Use login required decorator.
 
     return render_template('feedpage.html')
 
