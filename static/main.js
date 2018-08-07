@@ -1,11 +1,10 @@
-// A function to get new messages from the feed and then append it to
+// A function to get new messages from the feed and then refresh
 // the message feed.
 function showNewMessages(results) {
     let newMessages = results;
 
-    // The message-display is temperory id. The idea here is to create a <div>
-    // in the html with this id to show all messages. And then append new messages
-    // to the <div>. 
+    // Create a <div> in the html with this id to show all messages. 
+    // And then add new messages to the <div>. 
     $('#message-display').html(newMessages);
     // Add something (if...) to change the scrollbar。If user at the bottom of the scrollbar,
     // show the scroll to the bottom. 
@@ -25,5 +24,29 @@ function refreshMessages() {
 $(document).ready(function() {
     refreshMessages();
     setInterval(refreshMessages, 5000);
+    // Anything reference Jquery has to be called under the .ready function. 
+    $("#add-message").on("submit", submitMessage);
 });
+
+
+// add event onSubmit to call add user sent message to feedpage without reload
+// feedpage. Bug#1: feedpage route return an empty "". It made feedpage show
+// blank as well. However, message is successfully added to database, as well 
+// as added to the page when reload. 
+
+function showSetText() {
+    // Clear textarea.
+    refreshMessages();
+    $("#new_message").val("");
+}
+
+function submitMessage(evt) {
+    evt.preventDefault();
+    let formInput={
+        "message": $("#new_message").val()
+  }; 
+    $.post('/feedpage', formInput, showSetText);
+}
+
+// $("#add-message").on("submit", submitMessage);
 

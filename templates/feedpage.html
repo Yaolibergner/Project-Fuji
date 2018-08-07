@@ -3,11 +3,11 @@
 {% block content %}
     
     <h2>Welcome to Fuji Chat</h2>
-    <div id='message-display'>
+    <div id="message-display">
     </div>
     <div>
-        <form action="/feedpage", method="POST">
-        <textarea name="message" rows="10" cols="100"></textarea> <br>
+        <form id="add-message">
+        <textarea id="new_message" name="message" rows="10" cols="100"></textarea> <br>
         <input type="submit" value="Send">
         </form>
     </div>

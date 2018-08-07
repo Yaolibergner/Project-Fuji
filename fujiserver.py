@@ -119,7 +119,7 @@ def feedpage():
 
     # This page should not be seen for people who aren't login. 
     # http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
-    # Use login required decorator.
+    # Use login required decorator @login_required.
 
     return render_template('feedpage.html')
 
@@ -131,7 +131,6 @@ def add_message():
     author_id = session["user_id"]
     timestamp = datetime.now()
     chatroom_id = 1
-    # change timestap to timestamp same goes to model.py!!!!
     new_message = Message(author_id=author_id, timestamp=timestamp,
                           text=message, chatroom_id=chatroom_id)
 
@@ -146,14 +145,16 @@ def add_message():
 
     # translated_message = translate_text('zh-CN', messages).translated_text
 
-    return redirect("/feedpage")
+    # return redirect("/feedpage")
+    return ""
+    
 
 @app.route("/messages")
 def show_messages():
     """Show messages on feedpage"""
 
     messages = Message.query.all()
-
+    # This is the problem. 
     return render_template("messages.html", messages=messages)
     
 
