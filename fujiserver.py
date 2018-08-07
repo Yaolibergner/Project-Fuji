@@ -168,16 +168,15 @@ def show_messages():
     # translation_list = [""]
 
     for message in messages:
+        # message.translation gives list of objects. All the translation for the 
+        # language. Here assgin it to one trans_text based on user's language
+        # selection. 
         message.translation = Translation.query.filter_by(language=g.user.language, 
                                             message_id=message.message_id).first()
         # translation_list.append(translation)
-    # For translation in translations
-    #  translation.message_id pass into Jinja. Or create a dictionary with message_id
-    # and each translation id as value pair???
-    # jinja loopover for translation in translations
-    # {{ translation.message_id}}
-  
-    return render_template("messages.html", messages=messages)
+
+    
+    return render_template("messages.html", messages=messages, user=g.user)
                             # translation=translation_list)
     
 

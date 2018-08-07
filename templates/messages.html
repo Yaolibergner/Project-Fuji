@@ -1,10 +1,23 @@
 
+
+
 {% for message in messages %}
-    
-    <div class="message">
-        {{ message.text}}<br>
-        {{ message.translation.trans_text }}<br>       
-        {{ message.timestamp }} {{ message.user.fname }}
-    </div>
-    
+
+    {% if message.author_id != g.user.user_id %}
+
+        <div class="message">
+            {{ message.text}}<br>
+            {{ message.translation.trans_text }}<br>       
+            {{ message.timestamp }} {{ message.user.fname }}
+        </div>
+
+    {% else %}
+
+        <div class="message">
+            {{ message.text}}<br>     
+            {{ message.timestamp }} {{ message.user.fname }}
+        </div>
+
+    {% endif %} 
+
 {% endfor %}
