@@ -144,8 +144,7 @@ def add_message():
     # But how to present different language to the screen of different users?
 
     # translated_message = translate_text('zh-CN', messages).translated_text
-
-    # return redirect("/feedpage")
+    
     return ""
     
 
@@ -154,7 +153,7 @@ def show_messages():
     """Show messages on feedpage"""
 
     messages = Message.query.all()
-    # This is the problem. 
+
     return render_template("messages.html", messages=messages)
     
 

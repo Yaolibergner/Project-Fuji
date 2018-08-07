@@ -24,7 +24,7 @@ function refreshMessages() {
 $(document).ready(function() {
     refreshMessages();
     setInterval(refreshMessages, 5000);
-    // Anything reference Jquery has to be called under the .ready function. 
+    // Anything reference Jquery has to be called under the .ready() function. 
     $("#add-message").on("submit", submitMessage);
 });
 
@@ -34,7 +34,7 @@ $(document).ready(function() {
 // blank as well. However, message is successfully added to database, as well 
 // as added to the page when reload. 
 
-function showSetText() {
+function showSentText() {
     // Clear textarea.
     refreshMessages();
     $("#new_message").val("");
@@ -45,8 +45,8 @@ function submitMessage(evt) {
     let formInput={
         "message": $("#new_message").val()
   }; 
-    $.post('/feedpage', formInput, showSetText);
+    $.post('/feedpage', formInput, showSentText);
 }
 
-// $("#add-message").on("submit", submitMessage);
+alert($("#add-message").length);
 
