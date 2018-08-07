@@ -165,20 +165,20 @@ def show_messages():
     """Show messages on feedpage"""
 
     messages = Message.query.all()
-    translation_list = [""]
+    # translation_list = [""]
 
     for message in messages:
-        translation = Translation.query.filter_by(language=g.user.language, 
+        message.translation = Translation.query.filter_by(language=g.user.language, 
                                             message_id=message.message_id).first()
-        translation_list.append(translation)
+        # translation_list.append(translation)
     # For translation in translations
     #  translation.message_id pass into Jinja. Or create a dictionary with message_id
     # and each translation id as value pair???
     # jinja loopover for translation in translations
     # {{ translation.message_id}}
   
-    return render_template("messages.html", messages=messages,
-                            translation=translation_list)
+    return render_template("messages.html", messages=messages)
+                            # translation=translation_list)
     
 
 #------------------------------------------------------------------------------#
