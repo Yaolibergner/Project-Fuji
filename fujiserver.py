@@ -34,6 +34,7 @@ def load_user():
 
 # Add a login_required decorator. This is to protect feedpage not being showed 
 # if user not logged in.
+# http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -144,7 +145,7 @@ def add_message():
     # But how to present different language to the screen of different users?
 
     # translated_message = translate_text('zh-CN', messages).translated_text
-    
+
     return ""
     
 

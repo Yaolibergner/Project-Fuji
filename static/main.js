@@ -3,12 +3,30 @@
 function showNewMessages(results) {
     let newMessages = results;
 
+    // Add something (if...) to change the scrollbar。
+    // If user at the bottom of the scrollbar,
+    // show the scroll to the bottom. 
+    // setting display area to be.
+    let displayer = $('#message-display');
+    
+    // define atBottom status. scrollHeight is the total displayer size.
+    // scrollTop is the amount of scroll user has done.
+    // clientHeight is the amount of displayer an user sees.
+    // http://api.jquery.com/prop/
+    let atBottom = displayer.scrollTop() === 
+        displayer.prop('scrollHeight') - displayer.prop('clientHeight');
+    // debugger;
     // Create a <div> in the html with this id to show all messages. 
     // And then add new messages to the <div>. 
+    // Update the message.
     $('#message-display').html(newMessages);
-    // Add something (if...) to change the scrollbar。If user at the bottom of the scrollbar,
-    // show the scroll to the bottom. 
+
+    // make sure to show bottom. 
+    if (atBottom) {
+        displayer.scrollTop(displayer.prop('scrollHeight'));
+    } 
 }
+
 
 // A function to get new messages from the chat feed. 
 function refreshMessages() {
@@ -48,5 +66,5 @@ function submitMessage(evt) {
     $.post('/feedpage', formInput, showSentText);
 }
 
-alert($("#add-message").length);
+
 
