@@ -119,7 +119,7 @@ class Translation(db.Model):
 
         return f"""<Translation translation_id = {self.translation_id}
                     message_id={self.message_id}
-                    trans_texts={self.trans_texts}>"""
+                    trans_text={self.trans_text}>"""
 #####################################################################
 # Helper functions
 

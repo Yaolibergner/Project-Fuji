@@ -3,7 +3,7 @@
 from flask import Flask, session, render_template, request, flash, redirect, url_for, g
 import jinja2
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, db, User, Message, Chatroom
+from model import connect_to_db, db, User, Message, Chatroom, UserRoom, Translation
 from datetime import datetime
 from translate import translate_text
 from functools import wraps
@@ -149,9 +149,11 @@ def add_message():
     # to each language.
     for user in users:
         trans_text = translate_text(user.language, message).translated_text
-    
-    # message_id = message.message_id
-    # new_translation = Translation(......)
+        message_id = new_message.message_id
+        new_translation = Translation(message_id=message_id, trans_text=trans_text)
+
+        db.session.add(new_translation)
+        db.session.commit()
 
     return ""
     
