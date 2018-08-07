@@ -1,7 +1,10 @@
 
 {% for message in messages %}
+    
     <div class="message">
         {{ message.text}}<br>
-        {{ message.timestamp }} {{ message.user.fname}}
+        {{ translation[message.message_id].trans_text }}<br>
+        {{ message.timestamp }} {{ message.user.fname }}
     </div>
+    
 {% endfor %}
