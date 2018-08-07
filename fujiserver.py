@@ -73,7 +73,6 @@ def add_user():
     db.session.add(new_user)
     db.session.commit()
 
-    #flash(f"User {email} added.")
     return redirect("/")
 
 @app.route("/")
@@ -93,15 +92,15 @@ def logininfo():
     user = User.query.filter_by(email=email).first()
     # import pdb; pdb.set_trace()
     if not user:
-        # flash('No such user')
+        flash('No such user')
         return redirect("/register")
 
     if user.password != password:
-        #flash('Invalid password')
+        flash('Invalid password, please try again!')
         return redirect("/")
 
     session["user_id"] = user.user_id
-    #flash("Welcome, you are logged in.")
+
     return redirect("/feedpage")
 
 @app.route("/logout")
@@ -109,7 +108,7 @@ def logout():
     """User log out."""
 
     del session["user_id"]
-    #flash("Logged out.")
+    flash("You are logged out, see you soon.")
     return redirect("/")
 
 
@@ -146,7 +145,7 @@ def add_message():
 
     users = User.query.all()
     # Loop over all existing user languages. And translate the original message
-    # to each language.
+    # to each language. Add translated messages to database.
     for user in users:
         trans_text = translate_text(user.language, message).translated_text
         message_id = new_message.message_id
@@ -173,11 +172,9 @@ def show_messages():
         # selection. 
         message.translation = Translation.query.filter_by(language=g.user.language, 
                                             message_id=message.message_id).first()
-        # translation_list.append(translation)
-
-    
+  
     return render_template("messages.html", messages=messages, user=g.user)
-                            # translation=translation_list)
+                          
     
 
 #------------------------------------------------------------------------------#
