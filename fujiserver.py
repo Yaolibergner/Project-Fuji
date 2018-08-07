@@ -150,7 +150,9 @@ def add_message():
     for user in users:
         trans_text = translate_text(user.language, message).translated_text
         message_id = new_message.message_id
-        new_translation = Translation(message_id=message_id, trans_text=trans_text)
+        language = user.language
+        new_translation = Translation(message_id=message_id, trans_text=trans_text,
+                                      language=language)
 
         db.session.add(new_translation)
         db.session.commit()
@@ -163,7 +165,7 @@ def show_messages():
     """Show messages on feedpage"""
 
     messages = Message.query.all()
-    # translations = Translation.query.filter_by(lang=g.user.language)
+    translations = Translation.query.filter_by(language=g.user.language)
     # For translation in translations
     #  translation.message_id pass into Jinja. Or create a dictionary with message_id
     # and each translation id as value pair???

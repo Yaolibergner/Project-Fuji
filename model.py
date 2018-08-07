@@ -110,6 +110,7 @@ class Translation(db.Model):
                           primary_key=True)
     message_id = db.Column(db.Integer, db.ForeignKey('messages.message_id'), nullable=False)
     trans_text = db.Column(db.String(3000), nullable=False)
+    language = db.Column(db.String(15), nullable=False)
 
     message = db.relationship("Message",
                            backref=db.backref("translations"))
@@ -119,7 +120,8 @@ class Translation(db.Model):
 
         return f"""<Translation translation_id = {self.translation_id}
                     message_id={self.message_id}
-                    trans_text={self.trans_text}>"""
+                    trans_text={self.trans_text}
+                    language={self.language}>"""
 #####################################################################
 # Helper functions
 
