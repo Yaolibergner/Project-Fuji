@@ -144,7 +144,14 @@ def add_message():
     # selected lang_code to learn what language does the user want to be translated.
     # But how to present different language to the screen of different users?
 
-    # translated_message = translate_text('zh-CN', messages).translated_text
+    users = User.query.all()
+    # Loop over all existing user languages. And translate the original message
+    # to each language.
+    for user in users:
+        trans_text = translate_text(user.language, message).translated_text
+    
+    # message_id = message.message_id
+    # new_translation = Translation(......)
 
     return ""
     
@@ -154,6 +161,12 @@ def show_messages():
     """Show messages on feedpage"""
 
     messages = Message.query.all()
+    # translations = Translation.query.filter_by(lang=g.user.language)
+    # For translation in translations
+    #  translation.message_id pass into Jinja. Or create a dictionary with message_id
+    # and each translation id as value pair???
+    # jinja loopover for translation in translations
+    # {{ translation.message_id}}
 
     return render_template("messages.html", messages=messages)
     

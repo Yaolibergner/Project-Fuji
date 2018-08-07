@@ -55,7 +55,7 @@ class Message(db.Model):
         """Provide helpful representation when printed."""
 
         return f"""<message_id={self.message_id}
-                   texts={self.texts} timestap={self.timestap} 
+                   text={self.text} timestamp={self.timestamp} 
                    author_id={self.author_id}
                    chatroom_id={self.chatroom_id}>"""
 
