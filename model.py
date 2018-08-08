@@ -122,6 +122,8 @@ class Translation(db.Model):
                     message_id={self.message_id}
                     trans_text={self.trans_text}
                     language={self.language}>"""
+
+
 #####################################################################
 # Helper functions
 

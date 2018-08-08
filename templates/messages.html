@@ -8,6 +8,7 @@
             {{ message.translation.trans_text }}<br>       
             {{ message.timestamp.strftime("%d-%m-%y %H:%M") }} 
             {{ message.user.fname }}
+            <br><br>
         </div>
 
     {% else %}
@@ -16,6 +17,7 @@
             {{ message.text}}<br>     
             {{ message.timestamp.strftime("%d-%m-%y %H:%M") }} 
             {{ message.user.fname }}
+            <br><br>
         </div>
 
     {% endif %} 
