@@ -22,7 +22,7 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 
 # Use g the thread local to check if a user is logged in. 
 # https://stackoverflow.com/questions/13617231/how-to-use-g-user-global-in-flask
-
+# before any request, assign g.
 @app.before_request
 def load_user():
     """Check if user logged in for each route below."""
@@ -128,33 +128,29 @@ def add_message():
     """Add meesages to Message database"""
 
     message = request.form.get("message")
-    author_id = session["user_id"]
+    author_id = g.user.user_id
     timestamp = datetime.now()
     chatroom_id = 1
     new_message = Message(author_id=author_id, timestamp=timestamp,
                           text=message, chatroom_id=chatroom_id)
 
     db.session.add(new_message)
-    db.session.commit()
-
     # Messages on line 60 will be passed in to be translated. 
     # Call detect_language(text) and translate_text(target, text) functions. 
-    # Difficulties: how to solve the target arg? I can use user's id and their
-    # selected lang_code to learn what language does the user want to be translated.
-    # But how to present different language to the screen of different users?
 
-    users = User.query.all()
-    # Loop over all existing user languages. And translate the original message
+    languages = db.session.query(User.language).distinct()
+    # Loop over all existing user distinct languages. And translate the original message
     # to each language. Add translated messages to database.
-    for user in users:
-        trans_text = translate_text(user.language, message).translated_text
+    for language in languages:
+        # languages returns a list of tuples. language is still a tuple of one element.
+        # index language[0] to fix it. 
+        trans_text = translate_text(language[0], message).translated_text
         message_id = new_message.message_id
-        language = user.language
         new_translation = Translation(message_id=message_id, trans_text=trans_text,
                                       language=language)
-
         db.session.add(new_translation)
-        db.session.commit()
+    
+    db.session.commit()
 
     return ""
     
@@ -172,7 +168,7 @@ def show_messages():
         # selection. 
         message.translation = Translation.query.filter_by(language=g.user.language, 
                                             message_id=message.message_id).first()
-  
+        
     return render_template("messages.html", messages=messages, user=g.user)
                           
     

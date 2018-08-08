@@ -35,11 +35,13 @@ function refreshMessages() {
 
 // Set interval to request new messages every 5 seconds with now timeout.
 // A page can't be manipulated safely until the document is "ready." 
-// jQuery detects this state of readiness for you. 
+// jQuery detects this state of readiness for you. .ready() to make sure Jquery is ready.
 // Code included inside $( document ).ready() will only run once the page 
 // Document Object Model (DOM) is ready for JavaScript code to execute.
 // See more explaination here: http://learn.jquery.com/using-jquery-core/document-ready/ 
 $(document).ready(function() {
+    // Call refreshMessage to make better user experience so that there's no 5
+    // seconds delay.
     refreshMessages();
     setInterval(refreshMessages, 5000);
     // Anything reference Jquery has to be called under the .ready() function. 
