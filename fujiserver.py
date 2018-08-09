@@ -7,9 +7,10 @@ from model import connect_to_db, db, User, Message, Chatroom, UserRoom, Translat
 from datetime import datetime
 from translate import translate_text
 from functools import wraps
+import os
 
 app = Flask(__name__)
-app.secret_key = "iloayrengreblime"
+app.secret_key = os.environ['FLASK_SECRET_KEY']
 
 
 # Normally, if you refer to an undefined variable in a Jinja template,
@@ -31,6 +32,7 @@ def load_user():
     else: 
         user = None
     g.user = user
+
 
 # Add a login_required decorator. This is to protect feedpage not being showed 
 # if user not logged in.
@@ -168,7 +170,7 @@ def show_messages():
         # selection. 
         message.translation = Translation.query.filter_by(language=g.user.language, 
                                             message_id=message.message_id).first()
-        
+
     return render_template("messages.html", messages=messages, user=g.user)
                           
     

@@ -1,6 +1,6 @@
 from unittest import TestCase
 from fujiserver import app
-from model import connect_to_db, db, example_data
+from model import connect_to_db, db, example_data, Message
 from flask import session
 
 
@@ -97,11 +97,28 @@ class TestsDatabase(TestCase):
 
         self.assertIn(b"<h2>Login</h2>", result.data)
 
+    def test_addmessage(self):
+        """Test message add route."""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = '1'
+
+
+            result = self.client.post("/feedpage",
+                                  data={"message": "Hey, dude!"},
+                                         follow_redirects=True)
+
+            result_1 = Message.query.filter_by(text="Hey, dude!").first().author_id
+
+            self.assertEqual(result_1, 1)
+
     def tearDown(self):
         """Do at end of every test."""
 
         db.session.close()
         db.drop_all()
+
 
 
 if __name__ == "__main__":

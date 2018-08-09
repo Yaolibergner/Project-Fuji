@@ -1,7 +1,7 @@
 
 {% for message in messages %}
 
-    {% if message.author_id != g.user.user_id and message.text != message.translation.trans_text %}
+    {% if message.translation and message.author_id != g.user.user_id and message.text != message.translation.trans_text %}
 
         <div class="message">
             {{ message.text}}<br>

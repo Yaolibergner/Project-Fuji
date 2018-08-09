@@ -56,7 +56,7 @@ $(document).ready(function() {
 
 function showSentText() {
     // Clear textarea.
-    refreshMessages();
+    refreshMessages(); 
     $("#new_message").val("");
 }
 
@@ -64,8 +64,10 @@ function submitMessage(evt) {
     evt.preventDefault();
     let formInput={
         "message": $("#new_message").val()
-  }; 
-    $.post('/feedpage', formInput, showSentText);
+  };
+    // This is to not allow user to send empty message.  
+    if ($("#new_message").val() !== "") {
+        $.post('/feedpage', formInput, showSentText);}
 }
 
 

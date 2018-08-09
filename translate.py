@@ -3,26 +3,6 @@ from google.cloud import translate
 # See https://github.com/GoogleCloudPlatform/python-docs-samples
 # /blob/master/translate/cloud-client/snippets.py for more reference.
 
-class DetectResult(object):
-    """Contains the detection language and confidence level."""
-    def __init__(self, result):
-        self.confidence = result['confidence']
-        self.language = result['language']
-        
-def detect_language(text):
-    # [START translate_detect_language]
-    """Detects the text's language."""
-    translate_client = translate.Client()
-
-    # Text can also be a sequence of strings, in which case this method
-    # will return a sequence of results for each text.
-    result = translate_client.detect_language(text)
-
-    return DetectResult(result)
-
-# Test the detect_language function.
-# detect_language('你好')
-
 class TranslateResult(object):
     """Contains translated texts."""
     def __init__(self, result):
