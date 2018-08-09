@@ -127,11 +127,39 @@ class Translation(db.Model):
 #####################################################################
 # Helper functions
 
-def connect_to_db(app):
+# Add example to database for DB and Flask testing. 
+
+def example_data():
+    """Adding example to database."""
+
+    chatroom = Chatroom(chatroom_id="1")
+
+    user_1 = User(email="cat@cat.com",
+                password="4321",
+                fname="cat",
+                lname="cat",
+                language="en")
+
+    user_2 = User(email="dog@dog.com",
+                password="4321",
+                fname="dog",
+                lname="dog",
+                language="zh-CN")
+
+    message = Message(author_id="1", timestamp="08-08-2018",
+                      chatroom_id="1", text="What are you doing?")
+
+    db.session.add(chatroom)
+    db.session.add(user_1)
+    db.session.add(user_2)
+    db.session.add(message)
+    db.session.commit()
+
+def connect_to_db(app, db_uri='postgresql:///fuji'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///fuji'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
