@@ -1,6 +1,6 @@
 from unittest import TestCase
 from fujiserver import app
-from model import connect_to_db, db, example_data, Message
+from model import connect_to_db, db, example_data, Message, User, Translation, Chatroom
 from flask import session
 
 
@@ -94,7 +94,9 @@ class TestsDatabase(TestCase):
                                   data={"email": "miao@miao.com", "password": "0000",
                                         "fname": "miao", "lname": "miao", "language": "en"},
                                   follow_redirects=True)
+        result_1 = User.query.filter_by(email="miao@miao.com").first().language
 
+        self.assertEqual(result_1, "en")
         self.assertIn(b"<h2>Login</h2>", result.data)
 
     def test_addmessage(self):
@@ -110,8 +112,22 @@ class TestsDatabase(TestCase):
                                          follow_redirects=True)
 
             result_1 = Message.query.filter_by(text="Hey, dude!").first().author_id
+            result_2 = User.query.filter_by(user_id=2).first().language
 
             self.assertEqual(result_1, 1)
+            self.assertEqual(result_2, ("zh-CN"))
+
+    def test_showmessages(self):
+        """Test show messages route and translation."""
+
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_id'] = '1'
+
+            result = Message.query.filter_by(message_id=1).first().text
+
+            self.assertEqual(result, "What are you doing?")
+
 
     def tearDown(self):
         """Do at end of every test."""

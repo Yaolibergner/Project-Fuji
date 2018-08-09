@@ -43,7 +43,7 @@ $(document).ready(function() {
     // Call refreshMessage to make better user experience so that there's no 5
     // seconds delay.
     refreshMessages();
-    setInterval(refreshMessages, 5000);
+    setInterval(refreshMessages, 3000);
     // Anything reference Jquery has to be called under the .ready() function. 
     $("#add-message").on("submit", submitMessage);
 });

@@ -33,7 +33,6 @@ class User(db.Model):
         return f"""<User user_id={self.user_id} email={self.email}
                     fname={self.fname} language={self.language}>"""
 
-
 class Message(db.Model):
     """User messages."""
 
@@ -59,7 +58,6 @@ class Message(db.Model):
                    author_id={self.author_id}
                    chatroom_id={self.chatroom_id}>"""
 
-
 class Chatroom(db.Model):
     """Chatrooms."""
 
@@ -72,8 +70,7 @@ class Chatroom(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return f"<Chatroom chatroom_id={self.chatroom_id}>"
-        
+        return f"<Chatroom chatroom_id={self.chatroom_id}>"        
 
 class UserRoom(db.Model):       
     """Association table for User and Chatroom."""
@@ -99,7 +96,6 @@ class UserRoom(db.Model):
                     user_id={self.user_id}
                     chatroom_id={self.chatroom_id}>"""
 
-
 class Translation(db.Model):
     """Translated messages."""
 
@@ -122,7 +118,6 @@ class Translation(db.Model):
                     message_id={self.message_id}
                     trans_text={self.trans_text}
                     language={self.language}>"""
-
 
 #####################################################################
 # Helper functions
@@ -165,7 +160,7 @@ def connect_to_db(app, db_uri='postgresql:///fuji'):
     db.init_app(app)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     # As a convenience, if we run this module interactively, it will
     # leave you in a state of being able to work with the database
     # directly.
