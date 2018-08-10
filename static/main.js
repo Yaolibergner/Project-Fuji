@@ -7,7 +7,7 @@ function showNewMessages(results) {
     // If user at the bottom of the scrollbar,
     // show the scroll to the bottom. 
     // setting display area to be.
-    let displayer = $('#message-display');
+    let displayer = $('.messages');
     
     // define atBottom status. scrollHeight is the total displayer size.
     // scrollTop is the amount of scroll user has done.
@@ -19,7 +19,7 @@ function showNewMessages(results) {
     // Create a <div> in the html with this id to show all messages. 
     // And then add new messages to the <div>. 
     // Update the message.
-    $('#message-display').html(newMessages);
+    $('.messages').html(newMessages);
 
     // make sure to show bottom. 
     if (atBottom) {
@@ -45,7 +45,7 @@ $(document).ready(function() {
     refreshMessages();
     setInterval(refreshMessages, 3000);
     // Anything reference Jquery has to be called under the .ready() function. 
-    $("#add-message").on("submit", submitMessage);
+    $(".send_message").on("click", submitMessage);
 });
 
 
@@ -57,16 +57,16 @@ $(document).ready(function() {
 function showSentText() {
     // Clear textarea.
     refreshMessages(); 
-    $("#new_message").val("");
+    $(".message_input").val("");
 }
 
 function submitMessage(evt) {
     evt.preventDefault();
     let formInput={
-        "message": $("#new_message").val()
+        "message": $(".message_input").val()
   };
     // This is to not allow user to send empty message.  
-    if ($("#new_message").val() !== "") {
+    if ($(".message_input").val() !== "") {
         $.post('/feedpage', formInput, showSentText);}
 }
 

@@ -1,17 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Chat Page{% endblock %}
 {% block content %}
-    
-    <br>
-    <h2>{{ g.user.fname }}, Welcome to Fuji Chat</h2>
-    <div id="message-display">
-    </div>
-    <div>
-        <form id="add-message">
-        <textarea id="new_message" name="message" rows="10" 
-        cols="100"></textarea> <br>
-        <input type="submit" value="Send">
-        </form>
-    </div>
 
-{% endblock %}    
+<div class="chat_window">
+    <div class="top_menu">
+    <div class="buttons">
+        <div class="button close"></div>
+        <div class="button minimize"></div>
+        <div class="button maximize"></div>
+    </div>
+        <div class="title">{{ g.user.fname }}, Welcome to Fuji Chat</div>
+    </div>
+        <ul class="messages"></ul>
+        <div class="bottom_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input class="message_input" placeholder="Type your message here..." />
+        </div>
+        <div class="send_message">
+            <div class="icon"></div>
+            <div class="text">Send</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}   
+

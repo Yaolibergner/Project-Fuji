@@ -94,7 +94,6 @@ def logininfo():
     user = User.query.filter_by(email=email).first()
     # import pdb; pdb.set_trace()
     if not user:
-        flash('No such user')
         return redirect("/register")
 
     if user.password != password:
@@ -181,9 +180,9 @@ if __name__ == "__main__": # pragma: no cover
     app.debug = True
 
     connect_to_db(app)
-    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-    # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+    # # Use the DebugToolbar
+    # DebugToolbarExtension(app)
 
     app.run(host="0.0.0.0")
 

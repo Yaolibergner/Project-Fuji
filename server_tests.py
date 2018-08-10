@@ -74,7 +74,6 @@ class TestsDatabase(TestCase):
                                   follow_redirects=True)
         self.assertIn(b"<h1>Register</h1>", result_2.data)
 
-
     def test_logout(self):
         """Test logout route."""
 
@@ -105,7 +104,6 @@ class TestsDatabase(TestCase):
         with self.client as c:
             with c.session_transaction() as sess:
                 sess['user_id'] = '1'
-
 
             result = self.client.post("/feedpage",
                                   data={"message": "Hey, dude!"},

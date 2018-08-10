@@ -3,23 +3,31 @@
 
     {% if message.translation and message.author_id != g.user.user_id and message.text != message.translation.trans_text %}
 
-        <div class="message">
-            {{ message.text}}<br>
-            {{ message.translation.trans_text }}<br>       
-            {{ message.timestamp.strftime("%d-%m-%y %H:%M") }} 
-            {{ message.user.fname }}
-            <br><br>
+        <li class="message right appeared">
+        <div class="avatar">{{ message.user.fname[0] }}{{ message.user.lname[0] }}</div>
+        <div class="text_wrapper">
+            <div class="text">
+                {{ message.text}}<br>
+                {{ message.translation.trans_text }}<br>       
+                {{ message.timestamp.strftime("%d-%m-%y %H:%M") }}
+            </div>
         </div>
+        </li>
 
     {% else %}
-
-        <div class="message">
-            {{ message.text}}<br>     
-            {{ message.timestamp.strftime("%d-%m-%y %H:%M") }} 
-            {{ message.user.fname }}
-            <br><br>
+        <li class="message left appeared">
+        <div class="avatar">{{ message.user.fname[0] }}{{ message.user.lname[0] }}</div>
+        <div class="text_wrapper">
+            <div class="text">
+                {{ message.text}}<br>    
+                {{ message.timestamp.strftime("%d-%m-%y %H:%M") }}
+            </div>
         </div>
+        </li>
 
     {% endif %} 
 
 {% endfor %}
+
+
+  
